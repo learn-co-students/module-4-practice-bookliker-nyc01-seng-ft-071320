@@ -31,6 +31,7 @@ class App extends React.Component {
     let book = newStateArray.find(book => book.id === likedBook.id)
     book.users = newArray
     this.setState({books: newStateArray})
+    this.changeLikes(likedBook, newArray)
   }
 
   likeListener = (likedBook) => {
