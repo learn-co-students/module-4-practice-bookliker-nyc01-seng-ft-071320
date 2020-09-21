@@ -1,11 +1,6 @@
 import React from 'react'
 import {
-    Container,
-    Header,
     Menu,
-    Button,
-    List,
-    Image
   } from "semantic-ui-react";
 
 function HeaderTop (){
