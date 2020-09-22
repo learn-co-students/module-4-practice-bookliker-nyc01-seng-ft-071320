@@ -8,6 +8,11 @@ import {
 } from "semantic-ui-react";
 
 class BookDetails extends React.Component {
+
+  getUsers = () => {
+    return this.props.book.users.map(user => <List.Item icon="user" content={user.username} />)
+  }
+
   render() {
     return (
         <Container text>
@@ -25,12 +30,13 @@ class BookDetails extends React.Component {
             basic: true,
             color: "red",
             pointing: "left",
-            content: "2,048"
+            content: `${this.props.book.users.length}`
           }}
           />
         <Header>Liked by</Header>
         <List>
-          <List.Item icon="user" content="User name" />
+          {this.getUsers()}
+          {/* <List.Item icon="user" content="User name" /> */}
         </List>
           </Container>
     )
