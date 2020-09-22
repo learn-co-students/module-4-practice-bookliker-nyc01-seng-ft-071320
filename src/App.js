@@ -4,11 +4,14 @@ import {
 } from "semantic-ui-react";
 import BookDetails from "./Components/BookDetails";
 
-class App extends React.Component {
 
+class App extends React.Component {
+  
   state = {
     books: [],
-    clickedBook: null
+    clickedBook: null,
+    liked: false,
+    currentUser: {"id":1, "username":"pouros"}
   }
 
   componentDidMount() {
@@ -32,17 +35,35 @@ class App extends React.Component {
   }
 
   showBookDetails = (e, bookObj) => {
+    const likedByUser = bookObj.users.some(user => user.id === this.state.currentUser.id)
     e.persist()
     this.setState(() => ({
-      clickedBook: bookObj
+      clickedBook: bookObj,
+      liked: likedByUser
+    }))
+  }
+
+  updateLike = e => {
+    e.persist()
+    this.setState(() => ({
+      liked: !this.state.liked
     }))
   }
 
   getBookDetails = () => {
     if(this.state.clickedBook) {
-      return <BookDetails book={this.state.clickedBook}/>
+      return <BookDetails book={this.state.clickedBook} liked={this.state.liked} currentUser={this.state.currentUser} updateLike={this.updateLike} updateBook={this.updateBook}/>
     }
     return null
+  }
+
+  updateBook = bookObj => {
+    let newBooks = [...this.state.books]
+    let foundBook = newBooks.find(book => book.id === bookObj.id)
+    foundBook.users = bookObj.users
+    this.setState(() => ({
+      books: newBooks
+    }))
   }
 
   render() {
